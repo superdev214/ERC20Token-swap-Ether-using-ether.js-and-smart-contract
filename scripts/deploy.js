@@ -20,7 +20,7 @@ async function main() {
    setTimeout(async() => {
     await run("verify:verify",{
       address:dex.address,
-      constructorArguments:["10000000000000000000000000"],
+      constructorArguments:["10000000000000000000000000000000000000000000"],
       contract:"contracts/DexToken.sol:DEXToken"
     });
   },100000);
