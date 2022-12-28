@@ -8,7 +8,7 @@ const hre = require("hardhat");
 
 
 async function main() {
-  const DEX = await ethers.getContractFactory("DEX");
+  const DEX = await ethers.getContractFactory("DEXToken");
   const args = [
     "SwapToken Protocol", "swToken", "10000000"
   ];

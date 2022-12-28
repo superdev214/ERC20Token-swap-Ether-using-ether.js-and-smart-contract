@@ -75,13 +75,12 @@ pragma solidity ^0.8.9;
 // }
 
 
-contract DEX is ERC20{
+contract DEXToken is ERC20{
     event Bought(uint256 amount);
     event Sold(uint256 amount);
-    ERC20 public token;
     uint256 ratio = 10000;
    constructor(uint256 totalSupply) ERC20("SwapToken Protocol", ""){
-     _mint(msg.sender, totalSupply);
+     _mint(this, totalSupply);
     }
     function setRatio(uint256 _ratio)  external{
         ratio = _ratio;
@@ -91,20 +90,20 @@ contract DEX is ERC20{
     }
     function deposit() payable public {
         uint256 amountTobuy = msg.value;
-        uint256 dexBalance = token.balanceOf(address(this));
+        uint256 dexBalance = balanceOf(address(this));
         require(amountTobuy > 0, "You need to send some ether");
         // require(amountTobuy <= dexBalance / getRatio(), "Not enough tokens in the reserve");
         // token.transfer(msg.sender, amountTobuy * getRatio());
         require(amountTobuy <= dexBalance, "Not enough tokens in the reserve");
-        token.transfer(msg.sender, amountTobuy);
+        transfer(msg.sender, amountTobuy);
         emit Bought(amountTobuy);
     }
 
     function withdraw(uint256 amount) public {
         require(amount > 0, "You need to sell at least some tokens");
-        uint256 allowance = token.allowance(msg.sender, address(this));
+        uint256 allowance = allowance(msg.sender, address(this));
         require(allowance >= amount, "Check the token allowance");
-        token.transferFrom(msg.sender, address(this), amount);
+        transferFrom(msg.sender, address(this), amount);
         // payable(msg.sender).transfer(amount * getRatio());
          payable(msg.sender).transfer(amount);
         emit Sold(amount);
