@@ -12,7 +12,7 @@ async function main() {
   const args = [
     "SwapToken Protocol", "swToken", "10000000"
   ];
-  const dex = await DEX.deploy(10000000);
+  const dex = await DEX.deploy("10000000000000000000000000");
   await dex.deployed();
 
   console.log("dex deployed to:",dex.address);
@@ -20,8 +20,8 @@ async function main() {
    setTimeout(async() => {
     await run("verify:verify",{
       address:dex.address,
-      constructorArguments:["10000000"],
-      contract:"contracts/Token.sol:DEX"
+      constructorArguments:["10000000000000000000000000"],
+      contract:"contracts/DexToken.sol:DEXToken"
     });
   },100000);
   //0x7a5319aC58438dF78eb7D57FC0505713Fa52d8Ba // success there is error while I have
