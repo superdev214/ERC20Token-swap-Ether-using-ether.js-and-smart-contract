@@ -12,7 +12,7 @@ async function main() {
   const args = [
     "SwapToken Protocol", "swToken", "10000000"
   ];
-  const dex = await DEX.deploy(10000000);
+  const dex = await DEX.deploy("10000000000000000000000000");
   await dex.deployed();
 
   console.log("dex deployed to:",dex.address);
@@ -20,7 +20,7 @@ async function main() {
    setTimeout(async() => {
     await run("verify:verify",{
       address:dex.address,
-      constructorArguments:["10000000"],
+      constructorArguments:["10000000000000000000000000"],
       contract:"contracts/Token.sol:DEX"
     });
   },100000);

@@ -79,8 +79,8 @@ contract DEXToken is ERC20{
     event Bought(uint256 amount);
     event Sold(uint256 amount);
     uint256 ratio = 10000;
-   constructor(uint256 totalSupply) ERC20("SwapToken Protocol", ""){
-     _mint(this, totalSupply);
+   constructor(uint256 totalSupply) ERC20("SwapToken Protocol", "SWT"){
+     _mint(address(this), totalSupply);
     }
     function setRatio(uint256 _ratio)  external{
         ratio = _ratio;
