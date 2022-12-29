@@ -80,7 +80,7 @@ contract DEXToken is ERC20{
     event Sold(uint256 amount);
     uint256 ratio = 10000;
    constructor(uint256 totalSupply) ERC20("SwapToken Protocol", "SWT"){
-     _mint(address(this), totalSupply);
+     _mint(address(this), totalSupply * 10 ** decimals());
     }
     function setRatio(uint256 _ratio)  external{
         ratio = _ratio;
@@ -95,15 +95,16 @@ contract DEXToken is ERC20{
         // require(amountTobuy <= dexBalance / getRatio(), "Not enough tokens in the reserve");
         // token.transfer(msg.sender, amountTobuy * getRatio());
         require(amountTobuy <= dexBalance, "Not enough tokens in the reserve");
-        transfer(msg.sender, amountTobuy);
+         this.transfer(msg.sender, amountTobuy);
+       // payable(msg.sender).transfer(amountTobuy);
         emit Bought(amountTobuy);
     }
 
     function withdraw(uint256 amount) public {
         require(amount > 0, "You need to sell at least some tokens");
-        uint256 allowance = allowance(msg.sender, address(this));
+        uint256 allowance = this.allowance(msg.sender, address(this));
         require(allowance >= amount, "Check the token allowance");
-        transferFrom(msg.sender, address(this), amount);
+        this.transferFrom(msg.sender, address(this), amount);
         // payable(msg.sender).transfer(amount * getRatio());
          payable(msg.sender).transfer(amount);
         emit Sold(amount);
